@@ -14,8 +14,19 @@ dotenv.config({
 })//now to use this goto pakaage.json/scripts and use it as an exprerimental feature
 
 
-connectDB()
-
+connectDB().then(()=>{
+    app.on("error",(err)=>{
+        console.log("Error connecting to DB", err.message);
+        process.exit(1);
+    })
+    app.listen(PORT,()=>{
+        console.log(`Server is running on port ${PORT}`);
+    })
+})
+.catch((err) => {
+    console.log("Error connecting to DB", err.message);
+    process.exit(1);
+})
 
 
 
